@@ -13,6 +13,12 @@ enum Role {
   EMPLOYEE
 }
 
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id        String   @id @default(cuid())
   clerkId   String   @unique
@@ -31,7 +37,7 @@ model Application {
   applicantLastName  String
   guardianFirstName  String
   guardianLastName   String
-  dob                String
+  dateOfBirth        String
   gender             String
 
   applicantEmail  String
@@ -52,12 +58,8 @@ model Application {
   religion   String
   category   String
   bloodGroup String
-  isPWD      Boolean
-}
+  isPWD      String
 
-model ApplicationStatus {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-
-  status String
+  status      ApplicationStatus @default(PENDING)
+  applicantId String
 }

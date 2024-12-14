@@ -10,7 +10,8 @@ import { formSteps } from "@/lib/constants";
 
 import { Progress } from "@/components/ui/progress";
 import { Check } from "lucide-react";
-
+import FinalVerificationForm from "./final-verification";
+import OtherInfoForm from "./other-info";
 
 export default function ApplicationForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -27,7 +28,6 @@ export default function ApplicationForm() {
       setIsComplete(true);
     }
   };
-  
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function ApplicationForm() {
           {isComplete ? "All Done!" : currentStepData?.title}
         </h2>
         <span className="text-sm text-muted-foreground">
-          All fields are required
+          {currentStepData?.description}
         </span>
         {!isComplete && <Progress value={progress} className="h-2" />}
       </div>
@@ -64,6 +64,8 @@ export default function ApplicationForm() {
             {currentStep === 3 && (
               <ResidentialInfoForm onNextAction={handleNext} />
             )}
+            {currentStep === 4 && <OtherInfoForm onNextAction={handleNext} />}
+            {currentStep === 5 && <FinalVerificationForm onNextAction={handleNext} />}
           </div>
         )}
       </div>

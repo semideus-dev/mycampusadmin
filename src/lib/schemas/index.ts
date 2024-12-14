@@ -13,7 +13,7 @@ export const personalInfoSchema = z.object({
   gender: z.string().min(1, "Gender is required"),
 });
 
-export const contactDetailsSchema = z.object({
+export const contactInfoSchema = z.object({
   guardianEmail: z.string().email("Invalid email address"),
   applicantPhone: z.string().regex(phoneRegex, "Invalid phone number"),
   guardianPhone: z.string().regex(phoneRegex, "Invalid phone number"),
@@ -23,7 +23,7 @@ export const contactDetailsSchema = z.object({
     .max(12),
 });
 
-export const residentialDetailsSchema = z.object({
+export const residentialInfoSchema = z.object({
   pincode: z.string().min(6, "Pincode must be 6 digits").max(6),
   country: z.string().min(1, "Country is required"),
   nationality: z.string().min(1, "Nationality is required"),
@@ -33,3 +33,15 @@ export const residentialDetailsSchema = z.object({
   region: z.string().min(1, "Region is required"),
   address: z.string().min(10, "Please provide a detailed address"),
 });
+
+export const otherInfoSchema = z.object({
+  religion: z.string().min(1, "Religion is required"),
+  category: z.string().min(1, "Category is required"),
+  bloodGroup: z.string().min(1, "Blood group is required"),
+  isPWD: z.string().min(1, "Is PWD is required"),
+});
+
+export const finalVerificationSchema = personalInfoSchema
+  .merge(contactInfoSchema)
+  .merge(residentialInfoSchema)
+  .merge(otherInfoSchema);

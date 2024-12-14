@@ -147,7 +147,7 @@ export default function PersonalInfo({ onNextAction }: PersonalInfoProps) {
 
         <div className="flex justify-end">
           <Button type="submit">
-            Submit <ArrowRight className="ml-2 h-4 w-4" />
+            Save <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </form>

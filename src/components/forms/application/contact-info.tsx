@@ -16,18 +16,17 @@ import {
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactDetailsSchema } from "@/lib/schemas";
-import type { ContactDetailsValues } from "@/lib/types";
+import { contactInfoSchema } from "@/lib/schemas";
+import type { ContactInfoValues } from "@/lib/types";
 
 interface ContactInfoProps {
   onNextAction: () => void;
 }
 
 export default function ContactInfo({ onNextAction }: ContactInfoProps) {
-  const form = useForm<ContactDetailsValues>({
-    resolver: zodResolver(contactDetailsSchema),
+  const form = useForm<ContactInfoValues>({
+    resolver: zodResolver(contactInfoSchema),
     defaultValues: {
-      applicantEmail: "",
       guardianEmail: "",
       applicantPhone: "",
       guardianPhone: "",
@@ -35,7 +34,7 @@ export default function ContactInfo({ onNextAction }: ContactInfoProps) {
     },
   });
 
-  const onSubmit = (data: ContactDetailsValues) => {
+  const onSubmit = (data: ContactInfoValues) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("contactInfo", JSON.stringify(data));
     }
@@ -107,7 +106,7 @@ export default function ContactInfo({ onNextAction }: ContactInfoProps) {
           name="applicantAadhar"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Applicant Aadhar</FormLabel>
+              <FormLabel>Applicant Aadhar Number</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -118,7 +117,7 @@ export default function ContactInfo({ onNextAction }: ContactInfoProps) {
 
         <div className="flex justify-end">
           <Button type="submit">
-            Submit <ArrowRight className="ml-2 h-4 w-4" />
+            Save <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </form>

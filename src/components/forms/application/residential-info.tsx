@@ -3,9 +3,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  residentialDetailsSchema,
+  residentialInfoSchema,
 } from "@/lib/schemas";
-import type { ResidentialDetailsValues } from "@/lib/types";
+import type { ResidentialInfoValues } from "@/lib/types";
 import {
   Form,
   FormControl,
@@ -18,14 +18,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ResidentialInfoProps {
   onNextAction: () => void;
 }
 
 export default function ResidentialInfo({ onNextAction }: ResidentialInfoProps) {
-  const form = useForm<ResidentialDetailsValues>({
-    resolver: zodResolver(residentialDetailsSchema),
+  const form = useForm<ResidentialInfoValues>({
+    resolver: zodResolver(residentialInfoSchema),
     defaultValues: {
       pincode: "",
       country: "",
@@ -38,7 +45,7 @@ export default function ResidentialInfo({ onNextAction }: ResidentialInfoProps) 
     },
   });
 
-  const onSubmit = (data: ResidentialDetailsValues) => {
+  const onSubmit = (data: ResidentialInfoValues) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("residentialInfo", JSON.stringify(data));
     }
@@ -142,9 +149,20 @@ export default function ResidentialInfo({ onNextAction }: ResidentialInfoProps) 
           render={({ field }) => (
             <FormItem>
               <FormLabel>Region</FormLabel>
-              <FormControl>
-                <Input type="text" {...field} />
-              </FormControl>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Region" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="urban">Urban</SelectItem>
+                  <SelectItem value="rural">Rural</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -170,7 +188,7 @@ export default function ResidentialInfo({ onNextAction }: ResidentialInfoProps) 
 
         <div className="flex justify-end">
           <Button type="submit">
-            Complete <ArrowRight className="ml-2 h-4 w-4" />
+            Save <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </form>
