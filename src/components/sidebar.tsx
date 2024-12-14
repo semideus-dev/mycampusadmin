@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -32,6 +35,8 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -88,6 +93,7 @@ export function Sidebar() {
                 <TooltipTrigger asChild>
                   <Button
                     variant="ghost"
+                    onClick={() => router.push(item.href)}
                     className={cn(
                       "h-14",
                       collapsed ? "justify-center px-2" : "justify-start px-4",
